@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Final Network Scan Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; }
+        pre { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Final Network Scan Report</h1>
+    <pre>
+Network Scan Report
+====================
+Date: 2025-05-26 06:01:12
+
+Scan Summary
+------------
+Scanned IP Range: 192.168.1.0/24
+Scan Type: TCP SYN Scan
+Output File: scan_results.txt
+
+Discovered Hosts and Open Ports
+1. IP Address: 192.168.1.1 (ZTE Router)
+     - Open Ports:
+     - 23/tcp (Telnet) [Filtered] — INSECURE
+     - 53/tcp (DNS) — Used for domain resolution
+     - 80/tcp (HTTP) — Unencrypted web traffic
+     - 443/tcp (HTTPS) — Secure web traffic
+
+2. IP Address: 192.168.1.3 (Unknown)
+     - Open Ports:
+     - 49152/tcp (Unknown) — Possibly dynamic/private service
+     - 62078/tcp (iPhone-sync) — Apple device syncing
+
+3. IP Address: 192.168.1.4 (Amazon Technologies)
+     - Open Ports:
+     - 8009/tcp (AJP13) — Used by Apache Tomcat, vulnerable to Ghostcat (CVE-2020-1938)
+     - 9080/tcp (glrpc) — Unknown, possibly custom service
+
+4. IP Address: 192.168.1.7 (Windows Device)
+     - Open Ports:
+     - 135/tcp (MSRPC) — Remote Procedure Call (risky)
+     - 139/tcp (NetBIOS-SSN) — File/printer sharing (risky)
+     - 445/tcp (Microsoft-DS) — SMB file sharing (high risk)
+
+5. IP Addresses: 192.168.1.8 and 192.168.1.10
+   - All scanned ports were closed or filtered — Secure
+
+Service Overview and Risks
+--------------------------
+Port | Service       | Description                            | Risk Level
+-----|---------------|----------------------------------------|------------
+23   | Telnet        | Insecure remote login                  | 🔴 High
+53   | DNS           | Domain resolution                      | 🟡 Medium (if abused)
+80   | HTTP          | Web access (unencrypted)               | 🟡 Medium
+443  | HTTPS         | Secure web traffic                     | 🟢 Low
+49152| Unknown       | Possibly custom                        | 🟡 Depends
+62078| iPhone-sync   | Apple device service                   | 🟡 Low
+8009 | AJP13         | Apache JServ Protocol (Tomcat)         | 🔴 High (Ghostcat vulnerability)
+9080 | glrpc         | Unknown                                | 🟡 Unknown
+135  | MSRPC         | Windows remote procedure               | 🔴 High
+139  | NetBIOS-SSN   | Windows file/printer sharing           | 🔴 High
+445  | Microsoft-DS  | SMB file sharing                       | 🔴 High
+
+Recommendations for the open ports with high risks
+- Disable or firewall Telnet (23), SMB (445, 139), and AJP13 (8009) if not needed.
+- Ensure HTTP (80) redirects to HTTPS (443).
+- Keep all firmware/software updated.
+- Use strong internal firewall policies to limit access to sensitive ports.
+- Regularly scan your network to monitor new exposures.
+
+</pre>
+</body>
+</html>
